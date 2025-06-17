@@ -1,19 +1,20 @@
-Guia de Instalação — Ruby + Cucumber + Capybara + RSpec + Selenium WebDriver no Ubuntu
+# Guia de Instalação — Ruby + Cucumber + Capybara + RSpec + Selenium WebDriver no Ubuntu
+
 Este guia cobre a instalação e configuração básica para começar a usar Ruby com Cucumber, Capybara, RSpec e Selenium WebDriver para automação de testes.
 
-1. Instalar Ruby
-bash
+---
 
+## 1. Instalar Ruby
 
+```bash
 sudo apt update
 sudo apt install ruby-full build-essential zlib1g-dev -y
+
 Verifique a versão do Ruby:
 
-bash
-
-
 ruby -v
-2. Configurar o ambiente RubyGems (opcional)
+
+## 2. Configurar o ambiente RubyGems (opcional)
 Evite instalar gems com sudo adicionando estas linhas no seu .bashrc ou .zshrc:
 
 bash
@@ -23,12 +24,13 @@ echo '# Configuração Ruby Gems' >> ~/.bashrc
 echo 'export GEM_HOME="$HOME/gems"' >> ~/.bashrc
 echo 'export PATH="$HOME/gems/bin:$PATH"' >> ~/.bashrc
 source ~/.bashrc
-3. Instalar o Bundler
+
+## 3. Instalar o Bundler
 bash
 
-
 gem install bundler
-4. Criar o projeto e o arquivo Gemfile
+
+## 4. Criar o projeto e o arquivo Gemfile
 No diretório do projeto, crie o Gemfile com:
 
 ruby
@@ -46,7 +48,8 @@ bash
 
 
 bundle install
-5. Configurar o Chrome e ChromeDriver
+
+## 5. Configurar o Chrome e ChromeDriver
 Instalar Google Chrome:
 bash
 
@@ -73,7 +76,8 @@ wget https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/137.0.7151.103/
 unzip chromedriver-linux64.zip
 sudo mv chromedriver-linux64/chromedriver /usr/bin/chromedriver
 sudo chmod +x /usr/bin/chromedriver
-6. Configurar Capybara com Selenium e Chrome
+
+## 6. Configurar Capybara com Selenium e Chrome
 Crie o arquivo features/support/env.rb com:
 
 ruby
@@ -97,14 +101,15 @@ Capybara.configure do |config|
   config.default_driver = :selenium_chrome
   config.default_max_wait_time = 5
 end
-7. Inicializar o RSpec (opcional para testes unitários)
+
+## 7. Inicializar o RSpec (opcional para testes unitários)
 bash
 
 
 rspec --init
 Isso cria arquivos spec/spec_helper.rb e .rspec.
 
-8. Executar testes
+## 8. Executar testes
 Para rodar testes do Cucumber:
 
 bash
@@ -117,7 +122,7 @@ bash
 
 
 bundle exec rspec
-9. Dicas extras
+## 9. Dicas extras
 Para rodar o navegador sem interface (headless), adicione no env.rb:
 
 ruby
