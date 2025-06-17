@@ -1,0 +1,130 @@
+Guia de Instalação — Ruby + Cucumber + Capybara + RSpec + Selenium WebDriver no Ubuntu
+Este guia cobre a instalação e configuração básica para começar a usar Ruby com Cucumber, Capybara, RSpec e Selenium WebDriver para automação de testes.
+
+1. Instalar Ruby
+bash
+
+
+sudo apt update
+sudo apt install ruby-full build-essential zlib1g-dev -y
+Verifique a versão do Ruby:
+
+bash
+
+
+ruby -v
+2. Configurar o ambiente RubyGems (opcional)
+Evite instalar gems com sudo adicionando estas linhas no seu .bashrc ou .zshrc:
+
+bash
+
+
+echo '# Configuração Ruby Gems' >> ~/.bashrc
+echo 'export GEM_HOME="$HOME/gems"' >> ~/.bashrc
+echo 'export PATH="$HOME/gems/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+3. Instalar o Bundler
+bash
+
+
+gem install bundler
+4. Criar o projeto e o arquivo Gemfile
+No diretório do projeto, crie o Gemfile com:
+
+ruby
+
+
+source 'https://rubygems.org'
+
+gem 'cucumber'
+gem 'capybara'
+gem 'rspec'
+gem 'selenium-webdriver'
+Instale as gems:
+
+bash
+
+
+bundle install
+5. Configurar o Chrome e ChromeDriver
+Instalar Google Chrome:
+bash
+
+
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo apt install ./google-chrome-stable_current_amd64.deb
+Baixar e instalar ChromeDriver compatível
+Verifique a versão do Chrome:
+
+bash
+
+
+google-chrome --version
+Baixe a versão correspondente do ChromeDriver:
+
+https://googlechromelabs.github.io/chrome-for-testing/
+
+Exemplo para versão 137.0.7151.103:
+
+bash
+
+
+wget https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/137.0.7151.103/linux64/chromedriver-linux64.zip
+unzip chromedriver-linux64.zip
+sudo mv chromedriver-linux64/chromedriver /usr/bin/chromedriver
+sudo chmod +x /usr/bin/chromedriver
+6. Configurar Capybara com Selenium e Chrome
+Crie o arquivo features/support/env.rb com:
+
+ruby
+
+
+require 'capybara/cucumber'
+require 'selenium-webdriver'
+
+Capybara.register_driver :selenium_chrome do |app|
+  options = Selenium::WebDriver::Chrome::Options.new
+  options.binary = '/usr/bin/google-chrome'
+
+  Capybara::Selenium::Driver.new(
+    app,
+    browser: :chrome,
+    options: options
+  )
+end
+
+Capybara.configure do |config|
+  config.default_driver = :selenium_chrome
+  config.default_max_wait_time = 5
+end
+7. Inicializar o RSpec (opcional para testes unitários)
+bash
+
+
+rspec --init
+Isso cria arquivos spec/spec_helper.rb e .rspec.
+
+8. Executar testes
+Para rodar testes do Cucumber:
+
+bash
+
+
+bundle exec cucumber
+Para rodar testes RSpec:
+
+bash
+
+
+bundle exec rspec
+9. Dicas extras
+Para rodar o navegador sem interface (headless), adicione no env.rb:
+
+ruby
+
+
+options.add_argument('--headless')
+options.add_argument('--disable-gpu')
+options.add_argument('--no-sandbox')
+Para gerenciar versões do Ruby, considere usar o rbenv ou rvm.
+

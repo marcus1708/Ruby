@@ -1,0 +1,8 @@
+# frozen_string_literal: true
+
+source "https://rubygems.org"
+
+gem 'cucumber'
+gem 'capybara'
+gem 'rspec'       # se quiser usar RSpec
+gem 'selenium-webdriver' # se for rodar no navegador
